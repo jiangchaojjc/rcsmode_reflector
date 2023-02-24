@@ -1,0 +1,6 @@
+*.idea
+build/
+build_arm/
+armbin/
+bin/
+cmake-build-*/
