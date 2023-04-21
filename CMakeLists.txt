@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 PROJECT(rcsmode_reflector)
 
 set(CMAKE_CXX_STANDARD 11)
-
+#add_compile_options(-std=c++11 -g)
 
 # get version
 string(TIMESTAMP UVERSION "%y.%m.%d")
@@ -51,26 +51,58 @@ else()
 endif()
 
 ############################## set pre ##############################
-set(RCSRootDir /home/ucore/clion_ws/rcs_project/rcsalgo/rcsplugin/rcsmode)
+# set(RCSRootDir /home/ucore/clion_ws/rcs_project/rcsalgo/rcsplugin/rcsmode)
+# set(RCS_PROXY_PRE /usr/lib/longto)
+
+
+############################## set pre ##############################
+set(RCSRootDir /home/jc/rcsLongto/rcsmode)
+#set(RCSRootDir /home/tzy/work/tzy/project/longto_project)
+
 set(RCS_PROXY_PRE /usr/lib/longto)
+
+############################## longto mq lib ##############################
+#set(RCSLtLibDir ${RCS_PROXY_PRE})
+#include_directories(${RCSLtLibDir}/include)
+set(RCSLtLibDir ${RCSRootDir}/longto)
+include_sub_directories_recursively(${RCSLtLibDir}/include)
+#get_all_files_recursively(${RCSLtLibDir}/include LONGTOIncs *.h*)
 
 ############################## longto mq lib ##############################
 set(RCSLtLibDir ${RCS_PROXY_PRE})
 include_directories(${RCSLtLibDir}/include)
 
+# ############################## rcsbase ##############################
+# set(RCSBaseDir ${RCSRootDir}/rcsbase)
+# include_sub_directories_recursively(${RCSBaseDir}/inc)
+
+# ############################## rcsmsg ##############################
+# set(RCSMsgDir ${RCSRootDir}/rcsmsg)
+# include_sub_directories_recursively(${RCSMsgDir}/inc)
+# include_directories(${RCSMsgDir}/msgproxy/inc)
+
+
 ############################## rcsbase ##############################
 set(RCSBaseDir ${RCSRootDir}/rcsbase)
 include_sub_directories_recursively(${RCSBaseDir}/inc)
+get_all_files_recursively(${RCSBaseDir}/inc BASEIncs *.h*)
+include_directories(${RCSBaseDir}/common/eigen3)
 
 ############################## rcsmsg ##############################
 set(RCSMsgDir ${RCSRootDir}/rcsmsg)
 include_sub_directories_recursively(${RCSMsgDir}/inc)
+get_all_files_recursively(${RCSMsgDir}/inc MSGIncs *.h*)
 include_directories(${RCSMsgDir}/msgproxy/inc)
 
 ############################## rcstask ##############################
 set(RCSTaskDir ${RCSRootDir}/rcstask)
 include_sub_directories_recursively(${RCSTaskDir}/inc)
+# get_all_files_recursively(${RCSTaskDir}/inc TASKIncs *.h*)
+# include_directories(${RCSTaskDir}/msgproxy/inc)
 
+# ############################# rcscommon ##############################
+set(RCSCommonDir ${RCSRootDir}/rcscommon)
+include_sub_directories_recursively(${RCSCommonDir}/inc)
 
 ############################## this project ##############################
 include_sub_directories_recursively(${PROJECT_SOURCE_DIR}/inc)
